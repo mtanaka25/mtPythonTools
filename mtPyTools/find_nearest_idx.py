@@ -10,7 +10,10 @@ def find_nearest_idx(x, array) -> int:
     Returns:
         Int : the index for the element closest to x in array
     """
-    nearest_idx = np.abs(array - x).argmin()
+    if np.isscalar(x):
+        nearest_idx = np.abs(array - x).argmin()
+    else:
+        nearest_idx = find_nearest_idx_vec(x, array)
     return nearest_idx
 
 def find_nearest_idx_vec(x_vec, array) -> np.ndarray:
@@ -21,7 +24,7 @@ def find_nearest_idx_vec(x_vec, array) -> np.ndarray:
         array (array-like): array of candidate values
     
     Returns:
-        Int : vector of the index for the element closest to each x in array
+        NumPy array: vector of the index for the element closest to each x in array
     """
     
     if x_vec == np.ndarray:
