@@ -17,7 +17,7 @@ def find_nearest_idx(x, array) -> int:
     return nearest_idx
 
 def find_nearest_idx_vec(x_vec, array) -> np.ndarray:
-    """ Find the closest values in array to x and return their indeces.
+    """ Find the closest values in array to x and return their indices.
     
     Args:
         x_vec (array-like): vector of search values
