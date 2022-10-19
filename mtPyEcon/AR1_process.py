@@ -105,5 +105,5 @@ class AR1_process:
                        fmt='%2.3f', newline=' \\\\\n')
         
         # Store the result as the instance's attributes
-        self.__dict__['{0}_gird'.format(self.varname)] = x_grid
+        self.__dict__['{0}_grid'.format(self.varname)] = x_grid
         self.trans_mat, self.step_size = Pi_N, h
