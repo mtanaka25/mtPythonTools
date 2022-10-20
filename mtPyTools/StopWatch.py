@@ -24,4 +24,4 @@ class StopWatch:
     def show(self, elapsed_time=None, text='elapsed time'):
         if type(elapsed_time) == type(None):
             elapsed_time = self.elapsed_time
-        print('{0} = {1}\n'.format([text, elapsed_time]))
+        print('{0} = {1}\n'.format(text, elapsed_time))
