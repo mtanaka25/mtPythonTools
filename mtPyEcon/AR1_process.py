@@ -43,7 +43,7 @@ class AR1_process:
                 self._tauchen_discretize_nonstationary(N, Omega, approx_horizon, is_write_out_result)
             elif method in ['rouwenhorst', 'Rouwenhorst', 'R', 'r']:
                 if not is_quiet:
-                    print("Discretizing the non-stationary A(1) process by Rouwenhorst method...\n")
+                    print("Discretizing the non-stationary AR(1) process by Rouwenhorst method...\n")
                 self._rouwenhorst_discretize_nonstationary(N, approx_horizon, is_write_out_result)
             else:
                 raise Exception('"method" must be "Tauchen" or "Rouwenhorst."')
@@ -138,7 +138,7 @@ class AR1_process:
         sig_x_vec = np.zeros((approx_horizon,))
         sig_x_vec[0] = self.sig_x0
         for t in range(approx_horizon-1):
-            sig_x_vec[t+1] = self.rho**2 * sig_x_vec[t]**2 + self.sig**2
+            sig_x_vec[t+1] = np.sqrt(self.rho**2 * sig_x_vec[t]**2 + self.sig**2)
         
         # Prepare list of gird points
         x_max_vec  = sig_x_vec * np.sqrt(N - 1)
@@ -153,7 +153,7 @@ class AR1_process:
         # approximate transition matirix
         for t in range(approx_horizon - 1):
             # transition probability satisfying the moment condition on the conditional expectation
-            pi_t = 0.5 * (1 + self.rho * sig_x_vec(t)/sig_x_vec(t+1))
+            pi_t = 0.5 * (1 + self.rho * sig_x_vec[t]/sig_x_vec[t+1])
             
             # starting from N = 2
             Pi_N = np.array([[    pi_t, 1 - pi_t],
