@@ -13,7 +13,7 @@ setup(
     url='https://masaki-tanaka.com',
     author='Masaki Tanaka',
     author_email='masaki.tanaka@wustl.edu',
-    license='GPL-3.0 license',
-    version='0.1.0',
+    license='Apache-2.0 licensee',
+    version='0.2.0',
     packages=packages,
 )
