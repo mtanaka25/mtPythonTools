@@ -4,7 +4,7 @@ class PiecewiseIntrpl: # piecewised linear interpolation on a 1D grid
     def __init__(self, x, fx):
         if x is list:
             x, fx = np.array(x), np.array(fx)
-        if x.shape[0] < x.shape[1]:
+        if (len(x.shape) == 2) & (x.shape[0] < x.shape[1]):
             x, fx = x.T, fx.T
         
         self.x  = x
@@ -18,7 +18,7 @@ class PiecewiseIntrpl: # piecewised linear interpolation on a 1D grid
                 x_new = np.array(x_new)
             
             is_transposed = False
-            if x_new.shape[0] < x_new.shape[1]:
+            if (len(x_new.shape) == 2) & (x_new.shape[0] < x_new.shape[1]):
                 x_new = x_new.T
                 is_transposed = True
                 
@@ -33,14 +33,23 @@ class PiecewiseIntrpl: # piecewised linear interpolation on a 1D grid
         
         phi = np.zeros((len(self.x), ))
         if self.x[-1] <= x_new:
-            phi[-1]   = (x_new - self.x[-2])/(self.x[-1] - self.x[-2])
-            phi[-2] = (self.x[-1] -  x_new)/(self.x[-1] - self.x[-2])
+            if self.x[-1] == self.x[-2]
+                phi[-1] = 1
+            else:
+                phi[-1]   = (x_new - self.x[-2])/(self.x[-1] - self.x[-2])
+                phi[-2] = (self.x[-1] -  x_new)/(self.x[-1] - self.x[-2])
         elif x_new <= self.x[0]:
-            phi[1]   = (x_new - self.x[0])/(self.x[1] - self.x[0])
-            phi[0] = (self.x[1] -  x_new)/(self.x[1] - self.x[0])
+            if self.x[1] == self.x[0]
+                phi[0] = 1
+            else:
+                phi[1]   = (x_new - self.x[0])/(self.x[1] - self.x[0])
+                phi[0] = (self.x[1] -  x_new)/(self.x[1] - self.x[0])
         else:
-            phi[j]   = (x_new - self.x[j-1])/(self.x[j] - self.x[j-1])
-            phi[j-1] = (self.x[j] -  x_new)/(self.x[j] - self.x[j-1])
+            if self.x[j] == self.x[j-1]
+                phi[j] = 1
+            else:
+                phi[j]   = (x_new - self.x[j-1])/(self.x[j] - self.x[j-1])
+                phi[j-1] = (self.x[j] -  x_new)/(self.x[j] - self.x[j-1])
         
         fx_bar = np.sum(phi * self.fx)
         
@@ -67,14 +76,23 @@ class PiecewiseIntrpl_MeshGrid:
         def get_marginal_weight_vector(x, x_hat, j):
             phi = np.zeros((len(x), ))
             if x[-1] <= x_hat:
-                phi[-1]   = (x_hat - x[-2])/(x[-1] - x[-2])
-                phi[-2] = (x[-1] -  x_hat)/(x[-1] - x[-2])
+                if x[-1] == x[-2]
+                    phi[-1] = 1
+                else:
+                    phi[-1] = (x_hat - x[-2])/(x[-1] - x[-2])
+                    phi[-2] = (x[-1] -  x_hat)/(x[-1] - x[-2])
             elif x_hat <= x[0]:
-                phi[1]   = (x_hat - x[0])/(x[1] - x[0])
-                phi[0] = (x[1] -  x_hat)/(x[1] - x[0])
+                if x[1] == x[0]
+                    phi[0] = 1
+                else:
+                    phi[1]   = (x_hat - x[0])/(x[1] - x[0])
+                    phi[0] = (x[1] -  x_hat)/(x[1] - x[0])
             else:
-                phi[j]   = (x_hat - x[j-1])/(x[j] - x[j-1])
-                phi[j-1] = (x[j] -  x_hat)/(x[j] - x[j-1])
+                if x[j] == x[j-1]
+                    phi[j] = 1
+                else:
+                    phi[j]   = (x_hat - x[j-1])/(x[j] - x[j-1])
+                    phi[j-1] = (x[j] -  x_hat)/(x[j] - x[j-1])
             return phi       
         j1  = sum(self.x1_grid <= x1_new)
         j2  = sum(self.x2_grid <= x2_new)
