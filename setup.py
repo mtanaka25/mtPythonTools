@@ -14,6 +14,6 @@ setup(
     author='Masaki Tanaka',
     author_email='masaki.tanaka@wustl.edu',
     license='Apache-2.0 licensee',
-    version='0.2.0',
+    version='0.2.1',
     packages=packages,
 )
