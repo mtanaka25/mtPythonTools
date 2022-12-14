@@ -1,14 +1,5 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set()
-
-ichigo = '#B5495B' # preferred red
-ruri   = '#005CAF' # preferred blue
-rikyu  = '#897D55' # preferred green
-kincha = '#C7802D' # preferred brown
-sumire = '#66327C' # preferred purple
-nibi   = '#656765' # preferred gray
-sumi   = '#1C1C1C' # preferred black
+from .mtcolors import ichigo, ruri, rikyu, kincha, sumire, nibi, sumi
 
 line_colors = (ichigo, ruri, rikyu, kincha, sumire, nibi, sumi)
 line_width  = (1.5, 1.5, 1.5, 1.5, 1.5, 1.5)
@@ -17,6 +8,7 @@ labels      = ('Series 1', 'Series 2', 'Series 3', 'Series 4', 'Series 5', 'Seri
 
 def multiple_line_plot(x,
                        y,
+                       *,
                        line_colors = line_colors,
                        line_width = line_width,
                        line_styles = line_styles,
@@ -29,8 +21,10 @@ def multiple_line_plot(x,
                        xlim = None,
                        ylim = None,
                        savefig = True,
-                       fname = 'figure.png'
+                       fname = 'figure.png',
+                       style = 'ggplot'
                        ):
+    plt.style.use(style)
     N_y = y.shape[0]
     fig, ax = plt.subplots(1, 1, figsize=(8, 6))
     if plot_45_degree_line:
